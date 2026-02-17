@@ -1,6 +1,7 @@
 import "./globals.css"
 import MorphicNavbar from "@/components/kokonutui/morphic-navbar"
 
+
 export default function RootLayout({
   children,
 }: {
@@ -12,6 +13,7 @@ export default function RootLayout({
 
         {/* GLOBAL NAVBAR */}
         <MorphicNavbar />
+        
 
         {/* PAGE CONTENT */}
         {children}
