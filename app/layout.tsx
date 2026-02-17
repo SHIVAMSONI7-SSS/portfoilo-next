@@ -11,7 +11,7 @@ export default function RootLayout({
       <body className="bg-black text-white">
 
         {/* GLOBAL NAVBAR */}
-        <MorphicNavbar />
+        {/* <MorphicNavbar /> */}
 
         {/* PAGE CONTENT */}
         {children}

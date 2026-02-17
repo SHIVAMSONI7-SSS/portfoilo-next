@@ -6,16 +6,16 @@ import { useState } from "react";
 
 const navItems = {
   "/": {
-    name: "home",
+    name: "HOME",
   },
   "/home": {
-    name: "works",
+    name: "WORKS",
   },
   "/blog": {
-    name: "blog",
+    name: "BLOG",
   },
   "/about": {
-    name: "about",
+    name: "ABOUT",
   },
 };
 
@@ -46,7 +46,7 @@ export function MorphicNavbar() {
               <Link
                 className={clsx(
                   // 👇 SIZE INCREASED HERE
-                  "flex items-center justify-center bg-black py-2.5 px-6 text-base text-white transition-all duration-300 dark:bg-white dark:text-black",
+                  "flex items-center justify-center bg-neutral-900 py-2.5 px-6 text-base text-white transition-all duration-300 dark:bg-white dark:text-black",
 
                   isActive
                     ? "mx-2 rounded-2xl font-semibold"
