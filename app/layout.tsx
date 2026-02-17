@@ -9,7 +9,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className=" ">
+      <body className="pt-[120p]">
 
         {/* GLOBAL NAVBAR */}
         <MorphicNavbar />
