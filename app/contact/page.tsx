@@ -36,14 +36,16 @@ export default function ContactPage() {
   };
 
   return (
-    <main className={`${poppins.className} min-h-screen bg-[#f8fafc] flex items-center justify-center p-4 md:p-8`}>
+    // Added pt-[50px] here for the top space
+    <main className={`${poppins.className} min-h-screen bg-[#f8fafc] flex items-center justify-center pt-[50p] p-4 md:px-8 md:pb-8`}>
+      
       {/* Background Decor */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] rounded-full bg-teal-50/50 blur-3xl" />
         <div className="absolute -bottom-[10%] -right-[10%] w-[40%] h-[40%] rounded-full bg-gray-100 blur-3xl" />
       </div>
 
-      <div className="relative w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-0 bg-white/80 backdrop-blur-xl rounded-[2] shadow-2xl shadow-gray-200/50 border border-white overflow-hidden">
+      <div className="relative w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-0 bg-white/80 backdrop-blur-xl rounded-[2re] shadow-2xl shadow-gray-200/50 border border-white overflow-hidden">
         
         {/* Left Side: Info */}
         <div className="lg:col-span-5 bg-teal-600 p-8 md:p-12 text-white flex flex-col justify-between relative overflow-hidden">
@@ -66,11 +68,10 @@ export default function ContactPage() {
               <div className="p-3 bg-white/10 rounded-xl group-hover:bg-white/20 transition-colors">
                 <Mail size={20} />
               </div>
-              <span className="font-light">hello@yourdomain.com</span>
+              <span className="font-light text-sm md:text-base">hello@yourdomain.com</span>
             </div>
           </div>
 
-          {/* Abstract Shape Decor */}
           <div className="absolute -bottom-16 -left-16 w-64 h-64 bg-teal-500 rounded-full mix-blend-multiply filter blur-3xl opacity-50" />
         </div>
 
@@ -78,7 +79,6 @@ export default function ContactPage() {
         <div className="lg:col-span-7 p-8 md:p-12 bg-white">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Name */}
               <div className="space-y-2">
                 <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider flex items-center gap-2">
                   <User size={14} /> Full Name
@@ -92,7 +92,6 @@ export default function ContactPage() {
                 />
               </div>
 
-              {/* Email */}
               <div className="space-y-2">
                 <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider flex items-center gap-2">
                   <Mail size={14} /> Email Address
@@ -107,7 +106,6 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Message */}
             <div className="space-y-2">
               <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider flex items-center gap-2">
                 <MessageSquare size={14} /> Your Message
@@ -121,7 +119,6 @@ export default function ContactPage() {
               />
             </div>
 
-            {/* Submit Button */}
             <motion.button
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.98 }}
@@ -141,7 +138,6 @@ export default function ContactPage() {
               )}
             </motion.button>
 
-            {/* Status Messages */}
             <AnimatePresence>
               {status === "SUCCESS" && (
                 <motion.div
@@ -151,19 +147,7 @@ export default function ContactPage() {
                   className="flex items-center gap-2 text-emerald-600 bg-emerald-50 p-4 rounded-xl border border-emerald-100"
                 >
                   <CheckCircle2 size={20} />
-                  <p className="text-sm font-medium">Got it! I'll reach out to you shortly.</p>
-                </motion.div>
-              )}
-
-              {status === "ERROR" && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  className="flex items-center gap-2 text-red-600 bg-red-50 p-4 rounded-xl border border-red-100"
-                >
-                  <AlertCircle size={20} />
-                  <p className="text-sm font-medium">Something went wrong. Please try again.</p>
+                  <p className="text-sm font-medium">Got it! I'll reach out shortly.</p>
                 </motion.div>
               )}
             </AnimatePresence>
