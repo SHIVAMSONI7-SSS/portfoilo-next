@@ -5,7 +5,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, User, MessageSquare, CheckCircle2, ArrowRight } from 'lucide-react';
 
 export default function ContactPage() {
-  const [status, setStatus] = useState<"CLOSED" | "FORM" | "SENDING" | "SUCCESS">("CLOSED");
+  const [status, setStatus] = useState<"CLOSED" | "OPENING" | "FORM" | "SENDING" | "SUCCESS">("CLOSED");
+
+  const openMailbox = () => {
+    setStatus("OPENING");
+    setTimeout(() => setStatus("FORM"), 600); // Door khulne ka wait
+  };
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -19,7 +24,7 @@ export default function ContactPage() {
         headers: { 'Accept': 'application/json' }
       });
       if (response.ok) {
-        setTimeout(() => setStatus("SUCCESS"), 800);
+        setTimeout(() => setStatus("SUCCESS"), 1000);
       } else {
         setStatus("FORM");
       }
@@ -30,151 +35,120 @@ export default function ContactPage() {
 
   return (
     <main className="min-h-screen bg-[#fafaf9] flex items-center justify-center p-6 overflow-hidden">
-      
       <div className="max-w-md w-full relative">
         <AnimatePresence mode="wait">
           
-          {/* --- 1. INTERACTIVE MAILBOX --- */}
-          {status === "CLOSED" && (
+          {/* --- 1. MAILBOX (WITH OPENING DOOR) --- */}
+          {(status === "CLOSED" || status === "OPENING") && (
             <motion.div 
-              key="mailbox"
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ scale: 0.5, opacity: 0, transition: { duration: 0.4 } }}
-              onClick={() => setStatus("FORM")}
-              className="cursor-pointer group relative flex flex-col items-center"
+              key="mailbox-container"
+              exit={{ y: 100, opacity: 0 }}
+              className="flex flex-col items-center cursor-pointer"
+              onClick={openMailbox}
             >
-              <div className="relative">
+              <div className="relative perspective-1000">
                 {/* Mailbox Body */}
-                <motion.div 
-                  whileHover={{ y: -5 }}
-                  className="w-48 h-40 bg-orange-500 rounded-t-[3rem] rounded-b-xl shadow-2xl flex items-center justify-center text-white relative z-10"
-                >
-                  <Mail size={80} strokeWidth={1} className="group-hover:scale-110 transition-transform" />
-                </motion.div>
-                
-                {/* Mailbox Lever (Handle) */}
-                <motion.div 
-                  initial={{ rotate: 0 }}
-                  whileHover={{ rotate: 90 }}
-                  className="absolute -left-4 top-20 w-2 h-16 bg-orange-700 rounded-full origin-top transition-all duration-500"
-                >
-                  <div className="absolute bottom-0 -left-2 w-6 h-6 bg-red-600 rounded-full shadow-md" />
-                </motion.div>
-              </div>
+                <div className="w-48 h-36 bg-orange-600 rounded-t-full relative z-0 shadow-2xl flex items-center justify-center text-white/20">
+                   <Mail size={60} />
+                </div>
 
-              <motion.div 
-                animate={{ y: [0, 5, 0] }}
-                transition={{ repeat: Infinity, duration: 2 }}
-                className="mt-10 flex items-center gap-2 text-orange-500 font-bold tracking-[0.3em] uppercase text-[10px]"
-              >
-                Click to Open <ArrowRight size={12} />
-              </motion.div>
+                {/* Front Door Animation */}
+                <motion.div 
+                  initial={{ rotateX: 0 }}
+                  animate={{ rotateX: status === "OPENING" ? -110 : 0 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  className="absolute inset-0 bg-orange-500 rounded-t-full border-b-4 border-orange-700 origin-bottom z-20 flex items-center justify-center text-white"
+                >
+                  <Mail size={60} strokeWidth={1.5} />
+                  {/* Handle */}
+                  <div className="absolute top-4 right-4 w-3 h-8 bg-orange-800 rounded-full" />
+                </motion.div>
+
+                {/* Internal Form Preview (Coming out) */}
+                {status === "OPENING" && (
+                  <motion.div 
+                    initial={{ y: 0, opacity: 0 }}
+                    animate={{ y: -40, opacity: 1 }}
+                    className="absolute inset-x-4 top-0 h-20 bg-white rounded-t-lg z-10 shadow-inner"
+                  />
+                )}
+              </div>
+              <p className="mt-8 text-orange-500 font-bold tracking-[0.4em] uppercase text-[10px]">Tap to Open</p>
             </motion.div>
           )}
 
-          {/* --- 2. THE FORM (FOLDING EFFECT) --- */}
+          {/* --- 2. THE FORM --- */}
           {(status === "FORM" || status === "SENDING") && (
             <motion.div
-              key="form"
-              initial={{ scale: 0, rotate: -10, opacity: 0 }}
-              animate={{ scale: 1, rotate: 0, opacity: 1 }}
+              key="form-card"
+              initial={{ y: 200, opacity: 0, scale: 0.8 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
               exit={{ 
-                scale: [1, 0.5, 0],
-                rotate: [0, 20, 45],
-                y: [0, -100, -200],
+                y: -150, 
+                scale: 0.2, 
+                rotate: 15, 
                 opacity: 0,
-                transition: { duration: 0.8, ease: "backIn" }
+                transition: { duration: 0.8 } 
               }}
-              className="bg-white border-2 border-slate-100 rounded-[2.5rem] shadow-2xl overflow-hidden origin-bottom"
+              className="bg-white border-2 border-slate-100 rounded-[2rem] shadow-2xl overflow-hidden shadow-orange-100"
             >
-              <div className="bg-orange-500 p-6 text-center text-white">
-                <h2 className="text-xl font-bold tracking-tighter uppercase italic">Express Delivery</h2>
+              <div className="bg-orange-500 p-6 text-center text-white uppercase tracking-tighter">
+                <h2 className="font-bold">Write to Shivam</h2>
               </div>
 
               <form onSubmit={handleSubmit} className="p-8 space-y-4">
-                <div className="relative group">
-                  <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-orange-500 transition-colors" size={18} />
-                  <input required name="name" type="text" placeholder="Full Name" className="input-style" />
-                </div>
-                <div className="relative group">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-orange-500 transition-colors" size={18} />
-                  <input required name="email" type="email" placeholder="Email" className="input-style" />
-                </div>
-                <div className="relative group">
-                  <MessageSquare className="absolute left-4 top-4 text-slate-300 group-focus-within:text-orange-500 transition-colors" size={18} />
-                  <textarea required name="message" rows={4} placeholder="Your Message" className="input-style pl-12 pt-4" />
-                </div>
-
-                <motion.button 
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.95 }}
+                <input required name="name" type="text" placeholder="Name" className="input-style" />
+                <input required name="email" type="email" placeholder="Email" className="input-style" />
+                <textarea required name="message" rows={4} placeholder="Your message..." className="input-style pt-3" />
+                <button 
                   disabled={status === "SENDING"}
-                  className="w-full bg-orange-500 py-4 rounded-2xl text-white font-bold tracking-widest uppercase text-xs shadow-lg shadow-orange-200 overflow-hidden relative"
+                  className="w-full bg-orange-500 py-4 rounded-xl text-white font-bold tracking-widest uppercase text-xs hover:bg-orange-600 transition-colors"
                 >
-                  <span className="relative z-10">
-                    {status === "SENDING" ? "Folding Letter..." : "Deal Message"}
-                  </span>
-                  {status === "SENDING" && (
-                    <motion.div 
-                      className="absolute inset-0 bg-orange-600"
-                      initial={{ x: "-100%" }}
-                      animate={{ x: "0%" }}
-                      transition={{ duration: 0.8 }}
-                    />
-                  )}
-                </motion.button>
+                  {status === "SENDING" ? "Processing..." : "Deal Message"}
+                </button>
               </form>
             </motion.div>
           )}
 
-          {/* --- 3. THE KABOOTAR (PIGEON) PARALLAX --- */}
+          {/* --- 3. SLOW PIGEON ANIMATION --- */}
           {status === "SUCCESS" && (
-            <div className="relative flex flex-col items-center">
+            <div className="flex flex-col items-center">
               <motion.div
-                initial={{ x: -200, y: 200, opacity: 0, rotate: -20 }}
+                initial={{ x: -300, y: 150, opacity: 0 }}
                 animate={{ 
-                  x: [0, 150, 400, 800], 
-                  y: [0, -100, -250, -500],
-                  rotate: [0, -10, -20, -30],
+                  x: [-200, 100, 400, 900], 
+                  y: [100, 0, -100, -400],
                   opacity: [0, 1, 1, 0],
-                  scale: [0.5, 1.2, 1, 0.5]
+                  rotate: [0, -5, -15, -25]
                 }}
-                transition={{ duration: 4, ease: "circOut" }}
-                className="text-8xl relative"
+                transition={{ duration: 6, ease: "linear" }} // Slowed down from 3s to 6s
+                className="text-8xl relative mb-12"
               >
-                {/* Flapping Wings Effect */}
                 <motion.span
-                  animate={{ scaleY: [1, 0.7, 1] }}
-                  transition={{ repeat: Infinity, duration: 0.3 }}
+                  animate={{ scaleY: [1, 0.6, 1] }}
+                  transition={{ repeat: Infinity, duration: 0.5 }} // Smooth wing flap
                   className="inline-block"
                 >
                   🕊️
                 </motion.span>
-                {/* Letter in beak */}
-                <motion.div 
-                  className="absolute top-12 left-0 w-6 h-4 bg-white border border-slate-200 rounded-sm shadow-sm"
-                  animate={{ rotate: [0, 10, 0] }}
-                  transition={{ repeat: Infinity, duration: 0.5 }}
-                />
+                {/* Small Paper in Beak */}
+                <div className="absolute top-10 left-0 w-5 h-3 bg-white border border-slate-200 shadow-sm rotate-12" />
               </motion.div>
 
               <motion.div
-                initial={{ opacity: 0, filter: "blur(10px)" }}
-                animate={{ opacity: 1, filter: "blur(0px)" }}
-                transition={{ delay: 1.2 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.5 }}
                 className="text-center"
               >
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <CheckCircle2 className="text-green-500" size={32} />
-                </div>
-                <h2 className="text-3xl font-light text-slate-800">Mail <span className="font-bold">Deployed!</span></h2>
-                <p className="text-slate-400 font-light mt-2 italic text-sm">The Joker's messenger is on it.</p>
+                <CheckCircle2 className="text-green-500 mx-auto mb-4" size={48} />
+                <h2 className="text-2xl font-bold text-slate-800">Message Delivered!</h2>
+                <p className="text-slate-400 font-light mt-1">Kabootar has left the building.</p>
                 <button 
                   onClick={() => setStatus("CLOSED")}
-                  className="mt-10 px-6 py-2 border border-slate-200 rounded-full text-[10px] uppercase tracking-widest text-slate-400 hover:bg-orange-500 hover:text-white hover:border-orange-500 transition-all"
+                  className="mt-10 text-orange-500 font-bold uppercase tracking-widest text-[10px] hover:underline"
                 >
-                  Send another letter
+                  Send New Mail
                 </button>
               </motion.div>
             </div>
@@ -184,20 +158,19 @@ export default function ContactPage() {
       </div>
 
       <style jsx>{`
+        .perspective-1000 { perspective: 1000px; }
         .input-style {
           width: 100%;
-          padding: 1rem 1rem 1rem 3rem;
+          padding: 0.8rem 1rem;
           background: #f8fafc;
           border: 1px solid #f1f5f9;
-          border-radius: 1.2rem;
+          border-radius: 1rem;
           font-size: 0.875rem;
           outline: none;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .input-style:focus {
           border-color: #f97316;
           background: white;
-          box-shadow: 0 10px 25px -5px rgba(249, 115, 22, 0.1);
         }
       `}</style>
     </main>
