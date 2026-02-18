@@ -3,6 +3,7 @@ import "./globals.css";
 import MorphicNavbar from "@/components/kokonutui/morphic-navbar";
 import Footer from "@/components/kokonutui/footer"; 
 import ChatBot from "@/components/kokonutui/chatbot";
+import MouseTrail from "@/components/kokonutui/mouse";
 
 export default function RootLayout({
   children,
@@ -12,8 +13,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-[#f3f5f7] flex flex-col min-h-screen">
+        
+        {/* ✨ MOUSE TRAIL - Isse sabse upar rakha hai taaki ye pure background par particles dikhaye */}
+        <MouseTrail />
 
-        {/* 🔝 GLOBAL NAVBAR - Sabse upar */}
+        {/* 🔝 GLOBAL NAVBAR */}
         <MorphicNavbar />
 
         {/* 📄 PAGE CONTENT WRAPPER */}
@@ -23,12 +27,13 @@ export default function RootLayout({
             pt-[100px]     /* Mobile navbar gap */
             md:pt-[120px]  /* Desktop gap */
             px-4 md:px-8
+            relative       /* Z-index management ke liye */
           "
         >
           {children}
         </main>
 
-        {/* 🤖 AI CHATBOT - Floating element hamesha main ke bahar rakhein */}
+        {/* 🤖 AI CHATBOT (YURI) - Floating element outside main */}
         <ChatBot />
 
         {/* 底部 FOOTER */}
