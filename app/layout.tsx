@@ -16,8 +16,8 @@ export default function RootLayout({
         {/* 📄 PAGE CONTENT WRAPPER */}
         <main
           className="
-            pt-[100p]     /* Mobile navbar gap */
-            md:pt-[120p] /* Desktop gap */
+            pt-[100px]     /* Mobile navbar gap */
+            md:pt-[120px] /* Desktop gap */
             px-4 md:px-8
             min-h-screen
           "
