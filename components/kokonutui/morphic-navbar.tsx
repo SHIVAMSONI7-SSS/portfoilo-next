@@ -10,8 +10,9 @@ import clsx from "clsx";
 const navLinks = [
   { name: "Home", path: "/" },
   { name: "Works", path: "/home" },
-  { name: "Blog", path: "/blog" },
-  { name: "About", path: "/contact" },
+  { name: "skills", path: "/SKILLS" },
+  { name: "Contact", path: "/contact" },
+  { name: "2ndHome", path: "/2ndhome" },
 ];
 
 export default function Navbar() {
