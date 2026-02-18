@@ -12,7 +12,7 @@ const navLinks = [
   { name: "resume", path: "/resume" },
   { name: "Skills", path: "/SKILLS" },
   { name: "Contact", path: "/contact" },
-  { name: "2ndHome", path: "/2ndhome" },
+  // { name: "2ndHome", path: "/2ndhome" },
 ];
 
 export default function Navbar() {
