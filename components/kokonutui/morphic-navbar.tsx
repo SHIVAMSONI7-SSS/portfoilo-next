@@ -4,13 +4,13 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Zap } from "lucide-react";
 import clsx from "clsx";
 
 const navLinks = [
   { name: "Home", path: "/" },
   { name: "Works", path: "/home" },
-  { name: "skills", path: "/SKILLS" },
+  { name: "Skills", path: "/SKILLS" },
   { name: "Contact", path: "/contact" },
   { name: "2ndHome", path: "/2ndhome" },
 ];
@@ -35,16 +35,19 @@ export default function Navbar() {
         className={clsx(
           "mx-auto transition-all duration-300 ease-in-out flex items-center justify-between rounded-2xl border",
           scrolled 
-            ? "mt-4 max-w-4xl px-5 py-2 bg-white/80 backdrop-blur-lg border-gray-200/50 shadow-xl" 
+            ? "mt-4 max-w-4xl px-5 py-2 bg-white/80 backdrop-blur-lg border-orange-100/50 shadow-xl" 
             : "mt-6 max-w-5xl px-6 py-4 bg-white/40 backdrop-blur-md border-transparent shadow-none"
         )}
       >
-        {/* 🔷 Logo */}
-        <Link href="/" className="text-xl font-bold bg-gradient-to from-teal-600 to-cyan-600 bg-clip-text text-teal-600">
-          Shivam
+        {/* 🔷 Logo - Now IndieCoder with Orange Theme */}
+        <Link href="/" className="flex items-center gap-2 group text-xl font-bold tracking-tighter text-slate-800">
+          <div className="bg-orange-500 p-1.5 rounded-lg text-white group-hover:rotate-12 transition-transform duration-300 shadow-lg shadow-orange-200">
+            <Zap size={18} fill="currentColor" />
+          </div>
+          <span>IndieCoder<span className="text-orange-500">.</span></span>
         </Link>
 
-        {/* 🔗 Desktop Links */}
+        {/* 🔗 Desktop Links - Orange Highlights */}
         <div className="hidden md:flex items-center gap-1 relative">
           {navLinks.map((link) => {
             const isActive = pathname === link.path;
@@ -52,12 +55,15 @@ export default function Navbar() {
               <Link
                 key={link.path}
                 href={link.path}
-                className="relative px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:text-teal-600"
+                className={clsx(
+                  "relative px-4 py-2 text-sm font-medium transition-colors duration-300",
+                  isActive ? "text-orange-600" : "text-slate-500 hover:text-orange-500"
+                )}
               >
                 {isActive && (
                   <motion.span
                     layoutId="active-pill"
-                    className="absolute inset-0 bg-teal-50 rounded-xl -z-10 border border-teal-100/50"
+                    className="absolute inset-0 bg-orange-50 rounded-xl -z-10 border border-orange-100/50"
                     transition={{ type: "spring", duration: 0.5 }}
                   />
                 )}
@@ -68,19 +74,22 @@ export default function Navbar() {
         </div>
 
         {/* 📱 Mobile Toggle */}
-        <button className="md:hidden p-2 text-gray-600" onClick={() => setIsOpen(!isOpen)}>
+        <button 
+          className="md:hidden p-2 text-slate-600 hover:text-orange-500 transition-colors" 
+          onClick={() => setIsOpen(!isOpen)}
+        >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </motion.nav>
 
-      {/* 📱 Mobile Menu Dropdown */}
+      {/* 📱 Mobile Menu Dropdown - Orange Theme */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden mt-2 mx-auto max-w-[95%] bg-white/95 backdrop-blur-2xl rounded-2xl border border-gray-200 shadow-2xl overflow-hidden"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="md:hidden mt-2 mx-auto max-w-[95%] bg-white/95 backdrop-blur-2xl rounded-2xl border border-orange-100 shadow-2xl overflow-hidden"
           >
             <div className="flex flex-col p-4 gap-2">
               {navLinks.map((link) => (
@@ -90,7 +99,9 @@ export default function Navbar() {
                   onClick={() => setIsOpen(false)}
                   className={clsx(
                     "px-4 py-3 rounded-xl text-base font-medium transition-all",
-                    pathname === link.path ? "bg-teal-500 text-white" : "text-gray-700 hover:bg-gray-100"
+                    pathname === link.path 
+                      ? "bg-orange-500 text-white shadow-lg shadow-orange-200" 
+                      : "text-slate-700 hover:bg-orange-50 hover:text-orange-600"
                   )}
                 >
                   {link.name}
