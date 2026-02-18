@@ -73,14 +73,22 @@ const SocialIcon = ({ icon: Icon, label, delay }: { icon: any, label: string, de
       y: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: delay * 0.2 },
       opacity: { duration: 0.5, delay: 0.8 + (delay * 0.1) }
     }}
+    // --- Smooth Mobile/Desktop Interactions ---
     whileHover={{ 
       scale: 1.1, 
-      boxShadow: "0 15px 30px -10px rgba(249, 115, 22, 0.2)",
+      boxShadow: "0 20px 25px -5px rgba(249, 115, 22, 0.2)",
     }}
-    className="group relative flex items-center justify-center w-12 h-12 md:w-14 md:h-14 bg-white rounded-full border border-slate-200/60 shadow-sm text-slate-400 hover:text-orange-500 hover:border-orange-100 transition-all duration-300"
+    whileTap={{ 
+      scale: 0.9,
+      backgroundColor: "#fff7ed", // light orange tint on touch
+      transition: { duration: 0.1 }
+    }}
+    className="group relative flex items-center justify-center w-14 h-14 md:w-16 md:h-16 bg-white rounded-full border border-slate-200/60 shadow-sm text-slate-400 hover:text-orange-500 hover:border-orange-200 transition-colors duration-300 touch-none"
   >
-    <Icon size={20} strokeWidth={1.2} />
-    <span className="absolute -bottom-8 text-[10px] font-medium uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-opacity text-orange-500/80 whitespace-nowrap">
+    <Icon size={22} strokeWidth={1.2} />
+    
+    {/* Label for Mobile Clarity */}
+    <span className="absolute -bottom-10 text-[9px] font-bold uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity text-orange-500/80 whitespace-nowrap">
       {label}
     </span>
   </motion.a>
@@ -108,15 +116,15 @@ export default function LandingPage() {
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-stone-100 blur-[100px]" />
       </div>
 
-      <section className="relative z-10 max-w-4xl w-full text-center flex flex-col items-center space-y-12">
+      <section className="relative z-10 max-w-4xl w-full text-center flex flex-col items-center space-y-12 md:space-y-16">
         
         {/* Hero Text */}
-        <div className="space-y-2">
+        <div className="space-y-3">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}
-            className="text-4xl md:text-7xl font-light tracking-tight text-slate-800"
+            className="text-5xl md:text-8xl font-light tracking-tight text-slate-800"
           >
             Hi, I&apos;m <span className="text-orange-500 font-normal">Shivam Soni</span>
           </motion.h1>
@@ -125,7 +133,7 @@ export default function LandingPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
-            className="text-xl md:text-3xl"
+            className="text-2xl md:text-4xl"
           >
             <Typewriter />
           </motion.div>
@@ -136,14 +144,14 @@ export default function LandingPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 1 }}
-          className="text-slate-400 text-base md:text-lg leading-relaxed max-w-xl mx-auto font-light"
+          className="text-slate-400 text-lg md:text-xl leading-relaxed max-w-xl mx-auto font-light px-4"
         >
           Blending design with <span className="text-slate-600 font-medium">machine learning</span> to create
-          interactive digital solutions. Focused on data storytelling and minimalist aesthetics.
+          interactive digital solutions.
         </motion.p>
 
-        {/* Action Icons Row */}
-        <div className="flex flex-wrap justify-center gap-5 md:gap-7 pt-2">
+        {/* Action Icons Row - Optimized for Mobile Gaps */}
+        <div className="flex flex-wrap justify-center gap-x-6 gap-y-12 md:gap-x-10 pt-4 max-w-md md:max-w-none">
           {socialLinks.map((link, index) => (
             <SocialIcon 
               key={link.label} 
@@ -163,6 +171,7 @@ export default function LandingPage() {
         transition={{ delay: 1.8 }}
         className="absolute bottom-10 flex flex-col items-center gap-3"
       >
+        <div className="w-8 h-[1px] bg-orange-200" />
         <span className="text-[9px] uppercase tracking-[0.4em] text-slate-300 font-light">
           Built with precision • 2026
         </span>
