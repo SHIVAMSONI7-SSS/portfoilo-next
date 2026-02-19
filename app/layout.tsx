@@ -3,6 +3,7 @@ import MorphicNavbar from "@/components/kokonutui/morphic-navbar";
 import Footer from "@/components/kokonutui/footer"; 
 import Chatbot from "@/components/kokonutui/chatbot";
 import MouseTrail from "@/components/kokonutui/mouse";
+import { Analytics } from '@vercel/analytics/next';
 
 export default function RootLayout({
   children,
@@ -28,6 +29,7 @@ export default function RootLayout({
 
         {/* 底部 Footer */}
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
