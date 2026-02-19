@@ -14,6 +14,8 @@ const navLinks = [
   { name: "Contact", path: "/contact" },
   { name: "Chat", path: "/globalchat" }, 
   { name: "Geology", path: "/feature" }, 
+  { name: "card", path: "/card" }, 
+
 ];
 export default function Navbar() {
   const pathname = usePathname();
