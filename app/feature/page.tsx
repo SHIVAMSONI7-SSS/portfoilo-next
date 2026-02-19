@@ -1,148 +1,185 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Pickaxe, Mountain, Gem, Map, Compass, HardHat, Layers } from 'lucide-react';
+import { Upload, Trash2, Image as ImageIcon, Sparkles, Pickaxe, Mountain, Search, ScanLine, FileText } from 'lucide-react';
 
-export default function GeologyPage() {
+export default function GeologyAnalysisPage() {
   const [isMined, setIsMined] = useState(false);
   const [isBreaking, setIsBreaking] = useState(false);
+  const [image, setImage] = useState<string | null>(null);
+  const [analyzing, setAnalyzing] = useState(false);
+  const [report, setReport] = useState(false);
 
-  // Animation trigger
+  // Mining Animation Logic
   const handleMine = () => {
     setIsBreaking(true);
-    setTimeout(() => setIsMined(true), 1200); // 1.2s baad reveal
+    setTimeout(() => setIsMined(true), 1500);
+  };
+
+  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const previewUrl = URL.createObjectURL(file);
+      setImage(previewUrl);
+      setReport(false);
+    }
+  };
+
+  const startAnalysis = () => {
+    setAnalyzing(true);
+    setTimeout(() => {
+      setAnalyzing(false);
+      setReport(true);
+    }, 3000); // 3 seconds scan animation
   };
 
   return (
-    <div className="min-h-screen bg-[#fafaf9] overflow-hidden">
-      <AnimatePresence>
+    <div className="min-h-screen bg-[#fafaf9] font-sans selection:bg-orange-100">
+      <AnimatePresence mode="wait">
         {!isMined ? (
-          /* --- STARTING MINING ANIMATION --- */
+          /* --- MINING LOADER (Stable) --- */
           <motion.div
             key="loader"
-            exit={{ opacity: 0, scale: 1.5, filter: "blur(20px)" }}
-            className="fixed inset-0 z-[300] bg-slate-900 flex flex-col items-center justify-center cursor-none"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
+            className="fixed inset-0 z-[300] bg-slate-900 flex flex-col items-center justify-center cursor-pointer"
             onClick={handleMine}
           >
-            {/* Custom Pickaxe Cursor */}
-            <motion.div 
-              className="fixed pointer-events-none z-[310] text-orange-500"
-              animate={{ 
-                rotate: isBreaking ? [0, -45, 0] : 0,
-                x: isBreaking ? [0, 20, 0] : 0 
-              }}
-              transition={{ repeat: isBreaking ? Infinity : 0, duration: 0.3 }}
-              style={{ left: '55%', top: '40%' }}
-            >
-              <Pickaxe size={80} strokeWidth={1.5} />
-            </motion.div>
-
-            {/* The Rock to be Mined */}
             <motion.div
-              animate={isBreaking ? { shake: [0, 10, -10, 0] } : {}}
-              className="relative"
+              className="relative flex flex-col items-center"
+              animate={isBreaking ? { x: [-2, 2, -2, 2, 0], transition: { repeat: Infinity, duration: 0.1 } } : {}}
             >
-              <Mountain 
-                size={200} 
-                className={`${isBreaking ? 'text-slate-600 animate-pulse' : 'text-slate-700'} transition-colors`}
-                strokeWidth={1}
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <p className="text-white font-black tracking-[0.5em] text-[10px] uppercase opacity-50">
-                  {isBreaking ? "Mining Data..." : "Click to Mine My Journey"}
+              <motion.div
+                animate={isBreaking ? { rotate: [-20, 20, -20] } : { rotate: 0 }}
+                transition={{ duration: 0.2, repeat: Infinity }}
+                className="mb-8 text-orange-500"
+              >
+                <Pickaxe size={80} strokeWidth={1.5} />
+              </motion.div>
+              
+              <Mountain size={120} className={`${isBreaking ? 'text-slate-400' : 'text-slate-600'} transition-colors`} />
+              
+              <div className="mt-8 text-center text-white">
+                <p className="font-bold tracking-[0.3em] text-xs uppercase opacity-80">
+                  {isBreaking ? "Analyzing Crust..." : "Click to Mine My Data"}
                 </p>
               </div>
             </motion.div>
-
-            <p className="mt-12 text-slate-500 font-mono text-xs uppercase tracking-widest">
-              B.Sc Geology • Shivam Soni • IndieCoder
-            </p>
           </motion.div>
         ) : (
-          /* --- REVEALED GEOLOGY PAGE --- */
+          /* --- MAIN GEOLOGY TOOL UI --- */
           <motion.main
-            initial={{ opacity: 0, y: 50 }}
+            key="content"
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-7xl mx-auto py-20 px-6 font-sans"
+            className="max-w-6xl mx-auto py-12 px-6"
           >
-            {/* HEADER */}
-            <header className="mb-20 space-y-4">
-              <div className="flex items-center gap-2 text-orange-600">
-                <HardHat size={20} />
-                <span className="text-xs font-black uppercase tracking-[0.4em]">Academic Expedition</span>
+            <header className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-orange-50 border border-orange-100 mb-4">
+                <Search size={14} className="text-orange-600" />
+                <span className="text-[10px] font-black uppercase tracking-widest text-orange-700">Geology Strata Scanner</span>
               </div>
-              <h1 className="text-6xl md:text-8xl font-light text-slate-800 tracking-tighter">
-                Earth <span className="font-normal text-orange-600 underline decoration-slate-200 underline-offset-8">Sciences</span>
+              <h1 className="text-5xl md:text-7xl font-light text-slate-800 tracking-tighter">
+                Earth <span className="font-normal text-orange-600">Scanner</span>
               </h1>
-              <p className="text-slate-400 max-w-xl font-light leading-relaxed">
-                Exploring the intersection of Lithosphere and Software. My B.Sc in Geology provides a unique perspective on data patterns and structural analysis.
-              </p>
             </header>
 
-            {/* GEOLOGY BENTO GRID */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              
-              {/* Card 1: Core Subjects */}
-              <div className="md:col-span-2 bg-white border border-slate-100 p-10 rounded-[2.5rem] shadow-sm flex flex-col justify-between group hover:border-orange-200 transition-colors">
-                <div className="space-y-6">
-                  <div className="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400 group-hover:bg-orange-50 group-hover:text-orange-500 transition-all">
-                    <Layers size={24} />
-                  </div>
-                  <h3 className="text-2xl font-bold text-slate-800">Stratigraphy & Petrology</h3>
-                  <p className="text-slate-500 text-sm leading-relaxed">
-                    Study of rock layers and their formation. Applying these structural concepts to **Neural Network Architectures** and data layering.
-                  </p>
+            <div className="grid md:grid-cols-2 gap-12">
+              {/* UPLOAD & PREVIEW */}
+              <div className="space-y-6">
+                <div className="group relative aspect-square bg-white rounded-[2.5rem] border-2 border-dashed border-slate-200 flex flex-col items-center justify-center overflow-hidden hover:border-orange-400 transition-all shadow-sm">
+                  {image ? (
+                    <div className="relative w-full h-full">
+                      <img src={image} alt="Original" className="w-full h-full object-cover" />
+                      {analyzing && (
+                        <motion.div 
+                          initial={{ top: 0 }}
+                          animate={{ top: "100%" }}
+                          transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                          className="absolute left-0 right-0 h-1 bg-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.8)] z-10"
+                        />
+                      )}
+                    </div>
+                  ) : (
+                    <label className="cursor-pointer flex flex-col items-center">
+                      <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <ScanLine className="text-slate-400 group-hover:text-orange-500" />
+                      </div>
+                      <p className="text-sm font-bold text-slate-500 uppercase tracking-tighter">Upload Rock Sample</p>
+                      <input type="file" className="hidden" onChange={handleUpload} accept="image/*" />
+                    </label>
+                  )}
                 </div>
-                <div className="mt-10 flex gap-3 text-[10px] font-bold text-slate-300 uppercase tracking-widest">
-                  <span>Igneous</span> • <span>Sedimentary</span> • <span>Metamorphic</span>
-                </div>
-              </div>
-
-              {/* Card 2: Field Work */}
-              <div className="bg-slate-900 p-10 rounded-[2.5rem] text-white flex flex-col justify-between relative overflow-hidden">
-                <div className="absolute -top-10 -right-10 opacity-10">
-                  <Compass size={200} />
-                </div>
-                <div className="z-10">
-                  <Map size={32} className="text-orange-500 mb-6" />
-                  <h3 className="text-xl font-bold mb-4">Field Surveys</h3>
-                  <p className="text-slate-400 text-xs leading-relaxed font-light">
-                    Hazaribag Terrain Analysis & Mineral Mapping. Data collection in the wild, processed with Python.
-                  </p>
-                </div>
-                <div className="mt-8 pt-6 border-t border-white/10 flex items-center gap-2">
-                   <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                   <span className="text-[10px] uppercase font-bold tracking-widest">Observations Active</span>
-                </div>
-              </div>
-
-              {/* Card 3: The "Gem" Connection */}
-              <div className="bg-orange-500 p-10 rounded-[2.5rem] text-white md:col-span-3 flex items-center justify-between group overflow-hidden relative">
-                <div className="space-y-2 relative z-10">
-                  <h3 className="text-3xl font-black italic tracking-tighter uppercase leading-none">Why Geology?</h3>
-                  <p className="text-sm opacity-90 font-medium">Data is the new oil, and I know how to mine it.</p>
-                </div>
-                <motion.div 
-                  whileHover={{ rotate: 360 }} 
-                  transition={{ duration: 1 }}
-                  className="bg-white/20 p-6 rounded-full relative z-10"
+                
+                <button 
+                  disabled={!image || analyzing}
+                  onClick={startAnalysis}
+                  className="w-full py-5 bg-[#0f172a] text-white rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-orange-600 transition-all shadow-xl disabled:opacity-50"
                 >
-                  <Gem size={48} />
-                </motion.div>
-                {/* Decorative background text */}
-                <div className="absolute inset-y-0 right-0 text-[120px] font-black text-black/5 select-none pointer-events-none translate-y-10">
-                  LITHOS
-                </div>
+                  {analyzing ? "Scanning Strata..." : "Analyze Formation"}
+                </button>
               </div>
 
-            </div>
+              {/* ANALYSIS REPORT BOX */}
+              <div className="space-y-6">
+                <div className="aspect-square bg-slate-900 rounded-[2.5rem] p-8 text-white relative overflow-hidden shadow-2xl flex flex-col">
+                  <div className="flex justify-between items-center mb-8">
+                    <h3 className="text-xs font-black uppercase tracking-[0.3em] text-orange-500">Lithology Report</h3>
+                    <FileText size={18} className="text-slate-500" />
+                  </div>
 
-            <footer className="mt-20 text-center">
-              <p className="text-[10px] text-slate-300 uppercase tracking-[0.5em] font-medium italic">
-                "From Rocks to Code" — IndieCoder V2.6
-              </p>
-            </footer>
+                  <AnimatePresence mode="wait">
+                    {report ? (
+                      <motion.div 
+                        initial={{ opacity: 0 }} 
+                        animate={{ opacity: 1 }} 
+                        className="space-y-6 flex-1"
+                      >
+                        <div className="space-y-2">
+                          <p className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Sample Density</p>
+                          <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+                             <motion.div initial={{ width: 0 }} animate={{ width: "85%" }} className="h-full bg-orange-500" />
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="p-4 bg-white/5 rounded-2xl border border-white/10">
+                            <p className="text-[9px] text-slate-500 uppercase font-bold mb-1">Mineral Type</p>
+                            <p className="text-sm font-bold">Quartzite Mix</p>
+                          </div>
+                          <div className="p-4 bg-white/5 rounded-2xl border border-white/10">
+                            <p className="text-[9px] text-slate-500 uppercase font-bold mb-1">Age Est.</p>
+                            <p className="text-sm font-bold">~250 Million Yrs</p>
+                          </div>
+                        </div>
+                        <p className="text-xs text-slate-400 leading-relaxed font-light italic">
+                          "This strata shows significant tectonic pressure and metamorphic transformation."
+                        </p>
+                      </motion.div>
+                    ) : (
+                      <div className="flex-1 flex flex-col items-center justify-center text-slate-600">
+                        <Sparkles size={40} className="mb-4 opacity-10" />
+                        <p className="text-[10px] uppercase font-bold tracking-[0.4em] text-center">
+                          {analyzing ? "Reading Crystal Structure" : "Waiting for Sample"}
+                        </p>
+                      </div>
+                    )}
+                  </AnimatePresence>
+
+                  <div className="mt-auto pt-4 border-t border-white/10 text-[9px] text-slate-500 flex justify-between">
+                    <span>IndieCoder Geol-01</span>
+                    <span>Status: {analyzing ? "Scanning..." : "Ready"}</span>
+                  </div>
+                </div>
+
+                <button 
+                  onClick={() => {setImage(null); setReport(false);}}
+                  className={`w-full py-5 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all ${image ? 'bg-slate-200 text-slate-700 hover:bg-red-100 hover:text-red-600' : 'bg-slate-100 text-slate-300 pointer-events-none'}`}
+                >
+                  <Trash2 size={20} /> Clear Data
+                </button>
+              </div>
+            </div>
           </motion.main>
         )}
       </AnimatePresence>
