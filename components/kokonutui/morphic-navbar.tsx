@@ -13,7 +13,7 @@ const navLinks = [
   { name: "Skills", path: "/SKILLS" },
   { name: "Contact", path: "/contact" },
   { name: "Chat", path: "/globalchat" }, 
-  { name: "bg-remove", path: "/feature" }, 
+  { name: "Geology", path: "/feature" }, 
 ];
 export default function Navbar() {
   const pathname = usePathname();
