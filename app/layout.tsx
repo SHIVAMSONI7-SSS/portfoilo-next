@@ -1,7 +1,7 @@
 import "./globals.css";
 import MorphicNavbar from "@/components/kokonutui/morphic-navbar";
 import Footer from "@/components/kokonutui/footer"; 
-import ChatBot from "@/components/kokonutui/chatbot"; 
+import Chatbot from "@/components/kokonutui/chatbot";
 import MouseTrail from "@/components/kokonutui/mouse";
 
 export default function RootLayout({
@@ -24,7 +24,7 @@ export default function RootLayout({
         </main>
 
         {/* 🤖 AI ChatBot (Floating) */}
-        <ChatBot />
+        <Chatbot/>
 
         {/* 底部 Footer */}
         <Footer />
