@@ -12,9 +12,8 @@ const navLinks = [
   { name: "resume", path: "/resume" },
   { name: "Skills", path: "/SKILLS" },
   { name: "Contact", path: "/contact" },
-  // { name: "2ndHome", path: "/2ndhome" },
+  { name: "Chat", path: "/globalchat" }, 
 ];
-
 export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
