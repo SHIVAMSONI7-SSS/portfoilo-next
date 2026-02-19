@@ -2,27 +2,25 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, User } from 'lucide-react';
+import { X, Send, Bot, Sparkles, Terminal, Hash } from 'lucide-react';
 
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
-  const [messages, setMessages] = useState([{ role: 'assistant', content: 'Hi! I am YURI, Shivam\'s AI. Ask me anything about his work!' }]);
+  const [messages, setMessages] = useState([
+    { role: 'assistant', content: "Oye! Shivam ka dimag (YURI) bol raha hoon. Pucho kya puchna hai, par dhang ka sawaal hona chahiye." }
+  ]);
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollTo({
-        top: scrollRef.current.scrollHeight,
-        behavior: 'smooth'
-      });
+      scrollRef.current.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
     }
   }, [messages, loading]);
 
   const handleSend = async () => {
     if (!input.trim() || loading) return;
-
     const userMsg = { role: 'user', content: input };
     setMessages(prev => [...prev, userMsg]);
     setInput('');
@@ -31,108 +29,89 @@ export default function ChatBot() {
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
-        body: JSON.stringify({ messages: [...messages, userMsg].map(m => ({ role: m.role, content: m.content })) }),
+        body: JSON.stringify({ messages: [...messages, userMsg] }),
       });
       const data = await res.json();
       setMessages(prev => [...prev, { role: 'assistant', content: data.text }]);
     } catch (err) {
-      setMessages(prev => [...prev, { role: 'assistant', content: "Sorry, I'm having trouble connecting right now." }]);
+      setMessages(prev => [...prev, { role: 'assistant', content: "Server down hai. Shayad tune hi kuch kaand kiya hai." }]);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[200]">
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 50, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 50, scale: 0.9 }}
-            className="mb-4 w-[350px] md:w-[400px] h-[550px] bg-white rounded-[2.5rem] border border-orange-100 shadow-2xl flex flex-col overflow-hidden"
+    <div className="fixed bottom-8 right-8 z-[200] font-sans">
+      <AnimatePresence mode="wait">
+        {!isOpen ? (
+          /* --- MINIMALIST TOGGLE (Portfolio Theme) --- */
+          <motion.button
+            layoutId="chat-morph"
+            onClick={() => setIsOpen(true)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="w-14 h-14 bg-[#0f172a] rounded-2xl flex items-center justify-center shadow-xl border border-slate-700 group"
           >
-            {/* --- LUXURY HEADER --- */}
-            <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-orange-600 p-5 text-white flex justify-between items-center shadow-lg">
+            <Bot size={24} className="text-white group-hover:text-orange-500 transition-colors" />
+            <span className="absolute -top-1 -right-1 flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-orange-500"></span>
+            </span>
+          </motion.button>
+        ) : (
+          /* --- CLEAN TRANSFORMED CHAT --- */
+          <motion.div
+            layoutId="chat-morph"
+            className="w-[350px] md:w-[380px] h-[500px] bg-white rounded-[2rem] shadow-2xl flex flex-col overflow-hidden border border-slate-200 origin-bottom-right"
+          >
+            {/* Header: Matching your IndieCoder Branding */}
+            <div className="bg-[#0f172a] p-5 text-white flex justify-between items-center">
               <div className="flex items-center gap-3">
-                <div className="relative">
-                  <div className="w-12 h-12 rounded-2xl overflow-hidden border-2 border-white/20 bg-white/10 backdrop-blur-md">
-                    <img 
-                      src="/Gemini_Generated_Image_m8i1vom8i1vom8i1.png" 
-                      alt="YURI" 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-slate-900 rounded-full animate-pulse" />
+                <div className="bg-orange-500 p-2 rounded-lg">
+                  <Terminal size={20} className="text-white" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-base tracking-tight leading-none">YURI</h3>
-                  <p className="text-[9px] uppercase tracking-[0.2em] opacity-70 font-black mt-1">Soni Intelligence v1.0</p>
+                  <h3 className="font-bold text-sm tracking-tight">YURI INTELLIGENCE</h3>
+                  <p className="text-[10px] text-orange-400 font-bold tracking-widest uppercase">Shivam's Bestie</p>
                 </div>
               </div>
-              <button onClick={() => setIsOpen(false)} className="bg-white/10 hover:bg-white/20 p-2 rounded-xl transition-all">
-                <X size={20} />
+              <button onClick={() => setIsOpen(false)} className="hover:bg-white/10 p-1.5 rounded-full transition-colors">
+                <X size={18} />
               </button>
             </div>
 
-            {/* --- CHAT MESSAGES --- */}
-            <div ref={scrollRef} className="flex-1 overflow-y-auto p-5 space-y-6 bg-[#fcfcfc]">
+            {/* Chat Area */}
+            <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#f8fafc]">
               {messages.map((msg, i) => (
-                <div key={i} className={`flex items-end gap-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  {/* AI Profile Avatar in Chat */}
-                  {msg.role === 'assistant' && (
-                    <div className="w-8 h-8 rounded-full overflow-hidden border border-orange-200 shrink-0 shadow-sm">
-                      <img src="/Gemini_Generated_Image_m8i1vom8i1vom8i1.png" alt="YURI" className="w-full h-full object-cover" />
-                    </div>
-                  )}
-                  
-                  <div className={`max-w-[80%] p-4 rounded-[1.5rem] text-sm leading-relaxed shadow-sm transition-all ${
-                    msg.role === 'user' 
-                      ? 'bg-slate-900 text-white rounded-br-none' 
-                      : 'bg-white text-slate-700 border border-slate-100 rounded-bl-none'
-                  }`}>
+                <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`max-w-[85%] p-3 rounded-xl text-sm leading-relaxed
+                    ${msg.role === 'user' 
+                      ? 'bg-[#0f172a] text-white rounded-tr-none' 
+                      : 'bg-white text-slate-800 border border-slate-200 rounded-tl-none font-medium'}`}>
                     {msg.content}
                   </div>
-
-                  {msg.role === 'user' && (
-                    <div className="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center shrink-0 border border-orange-200">
-                      <User size={14} className="text-orange-600" />
-                    </div>
-                  )}
                 </div>
               ))}
-              
               {loading && (
-                <div className="flex items-end gap-2 justify-start">
-                  <div className="w-8 h-8 rounded-full overflow-hidden border border-orange-200 shrink-0">
-                    <img src="/Gemini_Generated_Image_m8i1vom8i1vom8i1.png" alt="YURI" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="bg-white border border-slate-100 p-4 rounded-[1.5rem] rounded-tl-none shadow-sm">
-                    <div className="flex gap-1.5">
-                      <div className="w-2 h-2 bg-orange-400 rounded-full animate-bounce" />
-                      <div className="w-2 h-2 bg-orange-400 rounded-full animate-bounce [animation-delay:0.2s]" />
-                      <div className="w-2 h-2 bg-orange-400 rounded-full animate-bounce [animation-delay:0.4s]" />
-                    </div>
-                  </div>
+                <div className="flex gap-1 p-2 bg-slate-200/50 w-fit rounded-lg animate-pulse">
+                  <div className="w-1 h-1 bg-slate-400 rounded-full animate-bounce" />
+                  <div className="w-1 h-1 bg-slate-400 rounded-full animate-bounce [animation-delay:0.2s]" />
                 </div>
               )}
             </div>
 
-            {/* --- INPUT AREA --- */}
-            <div className="p-5 bg-white border-t border-slate-50">
-              <div className="flex items-center gap-2 bg-slate-50 p-1.5 rounded-[1.8rem] border border-slate-100 focus-within:border-orange-200 focus-within:bg-white transition-all shadow-inner">
+            {/* Input Area */}
+            <div className="p-4 bg-white border-t border-slate-100">
+              <div className="flex items-center gap-2 bg-slate-50 rounded-xl px-3 py-1 border border-slate-200 focus-within:ring-1 ring-orange-500 transition-all">
+                <Hash size={16} className="text-slate-400" />
                 <input 
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                  placeholder="Ask YURI about Shivam..."
-                  className="flex-1 bg-transparent px-4 py-2 text-sm outline-none text-slate-700 placeholder:text-slate-400"
+                  placeholder="Kuch dhang ka pucho..."
+                  className="flex-1 bg-transparent text-sm outline-none text-slate-700 py-2"
                 />
-                <button 
-                  onClick={handleSend} 
-                  disabled={loading}
-                  className="bg-slate-900 text-white p-3 rounded-full hover:bg-orange-600 shadow-md transition-all active:scale-95 disabled:opacity-50"
-                >
+                <button onClick={handleSend} className="text-orange-600 p-1.5 hover:bg-orange-50 rounded-lg transition-colors">
                   <Send size={18} />
                 </button>
               </div>
@@ -140,27 +119,6 @@ export default function ChatBot() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* --- FLOATING TOGGLE BUTTON --- */}
-      <motion.button
-        whileHover={{ scale: 1.05, y: -2 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-16 h-16 bg-slate-900 rounded-[1.5rem] flex items-center justify-center shadow-2xl shadow-orange-200/50 border-4 border-white relative group overflow-hidden"
-      >
-        <div className="absolute inset-0 bg-gradient-to-tr from-orange-600 to-orange-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        {isOpen ? (
-          <X size={28} className="text-white relative z-10" />
-        ) : (
-          <div className="w-full h-full relative z-10">
-             <img 
-               src="/Gemini_Generated_Image_m8i1vom8i1vom8i1.png" 
-               alt="YURI" 
-               className="w-full h-full object-cover scale-110 group-hover:scale-125 transition-transform"
-             />
-          </div>
-        )}
-      </motion.button>
     </div>
   );
 }
