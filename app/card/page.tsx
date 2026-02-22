@@ -12,7 +12,9 @@ import {
   BarChart3, 
   Layers, 
   Sparkles, 
-  FileText 
+  FileText,
+  MousePointer2,
+  Layout 
 } from "lucide-react";
 
 const PROJECTS = [
@@ -53,6 +55,19 @@ const PROJECTS = [
     features: [
       { icon: <Sparkles size={20} />, label: "AI Optimizer", desc: "Smart content suggestions for better impact." },
       { icon: <FileText size={20} />, label: "ATS Ready", desc: "Structured data export for recruitment systems." }
+    ]
+  },
+  {
+    id: "04",
+    title: "Visual",
+    titleItalic: "Builder.",
+    category: "No-Code Platform",
+    url: "https://shivammsoni.vercel.app/",
+    description: "Interactive drag-and-drop website builder designed for rapid UI prototyping and seamless component orchestration.",
+    tags: ["React", "DND-Kit", "Tailwind"],
+    features: [
+      { icon: <MousePointer2 size={20} />, label: "Drag Interface", desc: "Intuitive element positioning and movement." },
+      { icon: <Layout size={20} />, label: "Canvas Engine", desc: "Real-time layout rendering and live editing." }
     ]
   }
 ];

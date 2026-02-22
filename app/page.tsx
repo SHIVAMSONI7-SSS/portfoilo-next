@@ -12,7 +12,7 @@ import {
   Share2 
 } from 'lucide-react';
 
-// --- Multi-Word Typewriter Component ---
+// hjvdvdd--- Multi-Word Typewriter Component ---
 
 const Typewriter = () => {
   const words = [
