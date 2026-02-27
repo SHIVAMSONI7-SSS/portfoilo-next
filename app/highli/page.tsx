@@ -1,9 +1,9 @@
-import React from 'react'
+import TextHighlighter from "@/components/kokonutui/higllli";
 
-function page() {
+export default function Example() {
   return (
-    <div>page</div>
-  )
+    <p>
+      Welcome to <TextHighlighter>Sera UI</TextHighlighter>
+    </p>
+  );
 }
-
-export default page

@@ -4,6 +4,16 @@ import Footer from "@/components/kokonutui/footer";
 import Chatbot from "@/components/kokonutui/chatbot";
 import MouseTrail from "@/components/kokonutui/mouse";
 import themebutton from "@/components/kokonutui/themebutton";
+
+import TextHighlighter from "@/components/kokonutui/higllli";
+
+
+    <p>
+      Welcome to <TextHighlighter>Sera UI</TextHighlighter>
+    </p>
+  
+
+
 export default function RootLayout({
   children,
 }: {
@@ -21,6 +31,7 @@ export default function RootLayout({
         {/* 📄 Page Content - Next.js automatically injects page.tsx here */}
         <main className="flex-grow pt-[100px] md:pt-[120px] px-4 md:px-8 relative">
           {children}
+       
         </main>
 
         {/* 🤖 AI ChatBot (Floating) */}
