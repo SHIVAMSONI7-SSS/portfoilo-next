@@ -3,7 +3,9 @@ import MorphicNavbar from "@/components/kokonutui/morphic-navbar";
 import Footer from "@/components/kokonutui/footer"; 
 import Chatbot from "@/components/kokonutui/chatbot";
 import MouseTrail from "@/components/kokonutui/mouse";
-import themebutton from "@/components/kokonutui/themebutton";
+// 1. Import ko Capitalize kiya (Carousel)
+import Carousel from "@/components/kokonutui/carousel"; 
+
 export default function RootLayout({
   children,
 }: {
@@ -18,13 +20,16 @@ export default function RootLayout({
         {/* 🔝 Navigation */}
         <MorphicNavbar />
 
-        {/* 📄 Page Content - Next.js automatically injects page.tsx here */}
+        {/* 📄 Page Content */}
         <main className="flex-grow pt-[100px] md:pt-[120px] px-4 md:px-8 relative">
           {children}
         </main>
 
-        {/* 🤖 AI ChatBot (Floating) */}
+        {/* 🤖 AI ChatBot */}
         <Chatbot/>
+
+        {/* 2. Component ko Capital letter se call kiya */}
+        <Carousel />
 
         {/* 底部 Footer */}
         <Footer />
