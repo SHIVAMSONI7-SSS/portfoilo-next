@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
+import ThreeDCarousel from "@/components/kokonutui/carousel";
 import {
   Linkedin,
   Github,
@@ -130,6 +131,7 @@ export default function HomePage() {
           })}
         </motion.div>
       </div>
+      <ThreeDCarousel/>
     </main>
   );
 }
