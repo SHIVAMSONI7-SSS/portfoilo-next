@@ -9,7 +9,7 @@ const FALLBACK =
   ' text-anchor="middle" fill="%234a5568" font-size="18">Image</text></svg>';
 
 const DEFAULT_IMAGES = [
-  'sora.jpg',
+  'pexels-junior-teixeira-1064069-2047905.jpg',
   'download.jpg',
   '1.jpg',
   '2.png',
