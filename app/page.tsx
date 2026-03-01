@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
 import ThreeDCarousel from "@/components/kokonutui/carousel";
+import TextPressure from "@/components/kokonutui/TextPressure";
+import TrueFocus from "@/components/kokonutui/TrueFocus";
 import {
   Linkedin,
   Github,
@@ -15,7 +17,7 @@ import {
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen w-full bg-[#f8fafc] relative overflow-hidden flex items-center justify-center px-6 py-16">
+    <main className="min-h-screen w-full bg-[#f8fafc] relative overflow-hidden flex flex-col items-center justify-center px-6 py-12">
       
       {/* ✨ Background Grid */}
       <div
@@ -33,114 +35,120 @@ export default function HomePage() {
         }}
       />
 
-      {/* 📦 MAIN GRID */}
-      <div className="relative z-10 max-w-6xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+      {/* 📦 HERO SECTION */}
+      <div className="relative z-10 max-w-6xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         
-        {/* 🧠 LEFT: TEXT */}
-        <div className="text-center md:text-left">
+        {/* 🧠 LEFT: CONTENT */}
+        <div className="flex flex-col items-center md:items-start text-center md:text-left">
+          
+          {/* ⚡ NAMASTE Fix: Height badha di hai taaki phone pe cut na ho */}
+          <div className="w-full h-24 sm:h-32 md:h-36 flex items-center overflow-visible mb-2">
+            <TextPressure
+              text="NAMASTE!"
+              flex
+              alpha={false}
+              stroke={false}
+              width={true}
+              weight={true}
+              italic={true}
+              textColor="#14b8a6" 
+              minFontSize={32} 
+            />
+          </div>
 
-          {/* Heading */}
+          {/* Main Heading */}
           <motion.h1
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-3xl sm:text-4xl md:text-6xl font-bold text-gray-700 leading-tight"
+            className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-gray-800 leading-tight"
           >
-            Hi, I'm{" "}
-            <span className="text-teal-500">
-              Shivam Soni
-            </span>
+            I'm <span className="text-teal-500">Shivam Soni</span>
           </motion.h1>
 
-          {/* Typewriter */}
-          <motion.h2
-            initial={{ opacity: 0, y: 40 }}
+          {/* Typewriter Effect */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="text-2xl sm:text-3xl md:text-5xl font-semibold text-gray-800 mt-4 h-[1.2em]"
+            className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-600 mt-2 h-[1.2em]"
           >
             <Typewriter
-              words={[
-                "AI & ML Learner",
-                "Data Analyst",
-                "Designer",
-                "Builder",
-              ]}
+              words={["AI & ML Learner", "Data Analyst", "Designer", "Builder"]}
               loop
               cursor
-              cursorStyle="|"
+              cursorStyle="_"
               typeSpeed={70}
               deleteSpeed={40}
               delaySpeed={1500}
             />
-          </motion.h2>
+          </motion.div>
 
-          {/* Description */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-            className="text-gray-500 mt-6 max-w-md mx-auto md:mx-0"
-          >
-            I build clean digital products combining data, design,
-            and real-world problem solving.
-          </motion.p>
-
-          {/* Icons */}
+          {/* Social Icons */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2 }}
-            className="flex flex-wrap justify-center md:justify-start gap-4 mt-8"
+            transition={{ delay: 0.8 }}
+            className="flex flex-wrap justify-center md:justify-start gap-3 mt-10"
           >
             {[
-              { icon: Linkedin, link: "#", label: "LinkedIn" },
-              { icon: Github, link: "#", label: "GitHub" },
-              { icon: Mail, link: "#", label: "Mail" },
-              { icon: Brain, link: "#", label: "AI/ML" },
-              { icon: BarChart3, link: "#", label: "Data" },
-              { icon: Palette, link: "#", label: "Design" },
-              { icon: Share2, link: "#", label: "Social" },
+              { icon: Linkedin, link: "#" },
+              { icon: Github, link: "#" },
+              { icon: Mail, link: "#" },
+              { icon: Brain, link: "#" },
+              { icon: BarChart3, link: "#" },
+              { icon: Palette, link: "#" },
+              { icon: Share2, link: "#" },
             ].map((item, index) => {
               const Icon = item.icon;
-
               return (
                 <a
                   key={index}
                   href={item.link}
-                  title={item.label}
-                  className="
-                    w-12 h-12 sm:w-14 sm:h-14
-                    flex items-center justify-center
-                    rounded-xl bg-white/80 backdrop-blur-sm
-                    border border-slate-200
-                    shadow-sm hover:shadow-xl
-                    hover:-translate-y-1 hover:border-teal-200
-                    transition-all duration-300
-                  "
+                  className="w-11 h-11 flex items-center justify-center rounded-xl bg-white border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 hover:border-teal-400 transition-all duration-300 group"
                 >
-                  <Icon
-                    className="text-gray-600 hover:text-teal-500 transition-colors"
-                    size={20}
-                  />
+                  <Icon className="text-gray-600 group-hover:text-teal-500" size={18} />
                 </a>
               );
-            })}
+            } )}
           </motion.div>
         </div>
 
         {/* 🎯 RIGHT: CAROUSEL */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5 }}
-          className="w-full flex justify-center"
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="w-full flex justify-center items-center"
         >
-          <div className="w-[280px] sm:w-[340px] md:w-[400px] lg:w-[450px]">
+          <div className="w-full max-w-[280px] sm:max-w-[380px] md:max-w-[450px]">
             <ThreeDCarousel />
           </div>
         </motion.div>
       </div>
+
+      {/* 🛠️ SKILLS SPOTLIGHT (TrueFocus) */}
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1 }}
+        className="relative z-10 mt-20 w-full max-w-4xl px-4 py-8 border-t border-slate-200/50"
+      >
+        <p className="text-center text-slate-400 text-sm font-medium mb-6 uppercase tracking-widest">
+          Expertise Focus
+        </p>
+        <div className="flex justify-center overflow-hidden">
+          <TrueFocus 
+            sentence="Python Machine-Learning Data-Analysis next Canva"
+            manualMode={false}
+            blurAmount={5}
+            borderColor="#14b8a6"
+            animationDuration={0.5}
+            pauseBetweenAnimations={1}
+          />
+        </div>
+      </motion.div>
+
     </main>
   );
 }
