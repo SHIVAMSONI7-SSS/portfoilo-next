@@ -11,6 +11,8 @@ import {
   BarChart3,
   Palette,
   Share2,
+  ExternalLink,
+  Sparkles,
 } from "lucide-react";
 
 export default function HomePage() {
@@ -36,8 +38,19 @@ export default function HomePage() {
       {/* 📦 MAIN GRID */}
       <div className="relative z-10 max-w-6xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
         
-        {/* 🧠 LEFT: TEXT */}
+        {/* 🧠 LEFT: TEXT & PROJECT */}
         <div className="text-center md:text-left">
+
+          {/* Featured Project Badge */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-100 text-teal-600 text-xs font-bold mb-6 tracking-wide uppercase"
+          >
+            <Sparkles size={14} className="animate-pulse" />
+            New Project: LuminaAI
+          </motion.div>
 
           {/* Heading */}
           <motion.h1
@@ -80,18 +93,36 @@ export default function HomePage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
-            className="text-gray-500 mt-6 max-w-md mx-auto md:mx-0"
+            className="text-gray-500 mt-6 max-w-md mx-auto md:mx-0 text-lg"
           >
             I build clean digital products combining data, design,
             and real-world problem solving.
           </motion.p>
 
-          {/* Icons */}
+          {/* 🚀 PROJECT ACTION BUTTON */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
+            className="mt-8 flex flex-wrap justify-center md:justify-start gap-4"
+          >
+            <a
+              href="https://luminaai-alpha.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative inline-flex items-center gap-2 px-8 py-4 bg-gray-900 text-white rounded-2xl font-semibold hover:bg-teal-600 transition-all duration-300 shadow-xl shadow-gray-200 hover:shadow-teal-200 hover:-translate-y-1"
+            >
+              Explore LuminaAI
+              <ExternalLink size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            </a>
+          </motion.div>
+
+          {/* Icons Section */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.2 }}
-            className="flex flex-wrap justify-center md:justify-start gap-4 mt-8"
+            className="flex flex-wrap justify-center md:justify-start gap-4 mt-10"
           >
             {[
               { icon: Linkedin, link: "#", label: "LinkedIn" },
