@@ -17,7 +17,7 @@ import {
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen w-full bg-[#f8fafc] relative overflow-x-hidden flex flex-col items-center justify-start md:justify-center px-4 sm:px-6 py-8 md:py-12">
+    <main className="min-h-screen w-full bg-[#f8fafc] relative overflow-x-hidden flex flex-col items-center px-4 sm:px-6 py-10 md:py-20">
       
       {/* ✨ Background Grid */}
       <div
@@ -35,13 +35,13 @@ export default function HomePage() {
         }}
       />
 
-      {/* 📦 MAIN CONTAINER */}
-      <div className="relative z-10 max-w-6xl w-full mx-auto flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+      {/* 📦 HERO SECTION */}
+      <div className="relative z-10 max-w-6xl w-full mx-auto flex flex-col md:grid md:grid-cols-2 gap-10 md:gap-16 items-center">
         
-        {/* 🧠 TOP/LEFT: CONTENT */}
-        <div className="flex flex-col items-center md:items-start text-center md:text-left order-2 md:order-1">
+        {/* 🧠 CONTENT (Always Top on Mobile) */}
+        <div className="flex flex-col items-center md:items-start text-center md:text-left order-1">
           
-          {/* ⚡ NAMASTE Fix: Responsive height and font */}
+          {/* ⚡ NAMASTE Element */}
           <div className="w-full h-20 sm:h-24 md:h-36 flex items-center overflow-visible mb-2">
             <TextPressure
               text="NAMASTE!"
@@ -52,26 +52,26 @@ export default function HomePage() {
               weight={true}
               italic={true}
               textColor="#14b8a6" 
-              minFontSize={28} // Smaller for phones
+              minFontSize={32} 
             />
           </div>
 
-          {/* Main Heading: Responsive text sizes */}
+          {/* Name Heading */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-3xl sm:text-5xl md:text-7xl font-extrabold text-gray-800 leading-[1.1]"
+            className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-gray-800 leading-tight"
           >
             I'm <span className="text-teal-500">Shivam Soni</span>
           </motion.h1>
 
-          {/* Typewriter Effect: Adjust height to prevent jumping */}
+          {/* Typewriter */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="text-xl sm:text-2xl md:text-4xl font-bold text-gray-600 mt-2 h-[1.5em]"
+            className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-600 mt-2 h-[1.2em]"
           >
             <Typewriter
               words={["AI & ML Learner", "Data Analyst", "Designer", "Builder"]}
@@ -84,12 +84,12 @@ export default function HomePage() {
             />
           </motion.div>
 
-          {/* Social Icons: Wrap on small screens */}
+          {/* Social Icons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
-            className="flex flex-wrap justify-center md:justify-start gap-2 sm:gap-3 mt-6 md:mt-10"
+            className="flex flex-wrap justify-center md:justify-start gap-3 mt-8 md:mt-12"
           >
             {[
               { icon: Linkedin, link: "#" },
@@ -105,23 +105,23 @@ export default function HomePage() {
                 <a
                   key={index}
                   href={item.link}
-                  className="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-xl bg-white border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 hover:border-teal-400 transition-all duration-300 group"
+                  className="w-11 h-11 flex items-center justify-center rounded-xl bg-white border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 hover:border-teal-400 transition-all duration-300 group"
                 >
                   <Icon className="text-gray-600 group-hover:text-teal-500" size={18} />
                 </a>
               );
-            } )}
+            })}
           </motion.div>
         </div>
 
-        {/* 🎯 BOTTOM/RIGHT: CAROUSEL (Order 1 on mobile to show first) */}
+        {/* 🎯 CAROUSEL (Now Bottom on Mobile) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="w-full flex justify-center items-center order-1 md:order-2 mt-4 md:mt-0"
+          className="w-full flex justify-center items-center order-2 md:order-2 mt-10 md:mt-0"
         >
-          <div className="w-[240px] sm:w-[320px] md:w-[450px] aspect-square">
+          <div className="w-[260px] sm:w-[350px] md:w-[480px] aspect-square">
             <ThreeDCarousel />
           </div>
         </motion.div>
@@ -132,20 +132,24 @@ export default function HomePage() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1 }}
-        className="relative z-10 mt-12 md:mt-20 w-full max-w-4xl px-4 py-6 md:py-8 border-t border-slate-200/50"
+        className="relative z-10 mt-16 md:mt-24 w-full max-w-5xl px-4 py-10 border-t border-slate-200/50"
       >
-        <p className="text-center text-slate-400 text-[10px] md:text-sm font-medium mb-4 md:mb-6 uppercase tracking-widest">
-          Expertise Focus
+        <p className="text-center text-slate-400 text-xs md:text-sm font-semibold mb-8 uppercase tracking-[0.2em]">
+          Core Expertise
         </p>
-        <div className="flex justify-center scale-75 sm:scale-90 md:scale-100">
-          <TrueFocus 
-            sentence="Python Machine-Learning Data-Analysis next Canva"
-            manualMode={false}
-            blurAmount={5}
-            borderColor="#14b8a6"
-            animationDuration={0.5}
-            pauseBetweenAnimations={1}
-          />
+        
+        {/* Alignment & Scaling Fix for Mobile */}
+        <div className="w-full flex justify-center overflow-x-hidden">
+          <div className="scale-[0.65] sm:scale-90 md:scale-110 origin-center transition-transform duration-500">
+            <TrueFocus 
+              sentence="Python Machine-Learning Data-Analysis NextJS Canva"
+              manualMode={false}
+              blurAmount={5}
+              borderColor="#14b8a6"
+              animationDuration={0.4}
+              pauseBetweenAnimations={1}
+            />
+          </div>
         </div>
       </motion.div>
 
