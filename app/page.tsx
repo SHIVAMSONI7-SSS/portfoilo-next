@@ -19,7 +19,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen w-full bg-[#f8fafc] relative overflow-hidden flex items-center justify-center px-6 py-16">
       
-      {/* ✨ Background Grid */}
+      {/* Background Grid */}
       <div
         className="absolute inset-0 z-0"
         style={{
@@ -35,13 +35,12 @@ export default function HomePage() {
         }}
       />
 
-      {/* 📦 MAIN GRID */}
       <div className="relative z-10 max-w-6xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
         
-        {/* 🧠 LEFT: TEXT & PROJECT */}
+        {/* LEFT */}
         <div className="text-center md:text-left">
 
-          {/* Featured Project Badge */}
+          {/* Badge */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -59,10 +58,7 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             className="text-3xl sm:text-4xl md:text-6xl font-bold text-gray-700 leading-tight"
           >
-            Hi, I'm{" "}
-            <span className="text-teal-500">
-              Shivam Soni
-            </span>
+            Hi, I'm <span className="text-teal-500">Shivam Soni</span>
           </motion.h1>
 
           {/* Typewriter */}
@@ -99,25 +95,37 @@ export default function HomePage() {
             and real-world problem solving.
           </motion.p>
 
-          {/* 🚀 PROJECT ACTION BUTTON */}
+          {/* PROJECT BUTTONS */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
             className="mt-8 flex flex-wrap justify-center md:justify-start gap-4"
           >
+            {/* LuminaAI */}
             <a
               href="https://luminaai-alpha.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative inline-flex items-center gap-2 px-8 py-4 bg-gray-900 text-white rounded-2xl font-semibold hover:bg-teal-600 transition-all duration-300 shadow-xl shadow-gray-200 hover:shadow-teal-200 hover:-translate-y-1"
+              className="group inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-xl font-semibold hover:bg-teal-600 transition-all duration-300 shadow-md hover:-translate-y-1"
             >
-              Explore LuminaAI
+              LuminaAI
+              <ExternalLink size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            </a>
+
+            {/* Ecommerce Project */}
+            <a
+              href="https://ecomerce-eight-nu.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-900 hover:text-white transition-all duration-300 shadow-sm hover:-translate-y-1"
+            >
+              E-Commerce App
               <ExternalLink size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
             </a>
           </motion.div>
 
-          {/* Icons Section */}
+          {/* Icons */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -140,15 +148,7 @@ export default function HomePage() {
                   key={index}
                   href={item.link}
                   title={item.label}
-                  className="
-                    w-12 h-12 sm:w-14 sm:h-14
-                    flex items-center justify-center
-                    rounded-xl bg-white/80 backdrop-blur-sm
-                    border border-slate-200
-                    shadow-sm hover:shadow-xl
-                    hover:-translate-y-1 hover:border-teal-200
-                    transition-all duration-300
-                  "
+                  className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center rounded-xl bg-white/80 backdrop-blur-sm border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-teal-200 transition-all duration-300"
                 >
                   <Icon
                     className="text-gray-600 hover:text-teal-500 transition-colors"
@@ -160,7 +160,7 @@ export default function HomePage() {
           </motion.div>
         </div>
 
-        {/* 🎯 RIGHT: CAROUSEL */}
+        {/* RIGHT */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
