@@ -13,9 +13,22 @@ import {
   Share2,
   ExternalLink,
   Sparkles,
+  Code2,
 } from "lucide-react";
 
 export default function HomePage() {
+  // Organized Project List
+  const projects = [
+    { name: "LuminaAI", link: "https://luminaai-alpha.vercel.app/" },
+    { name: "Vyapar", link: "https://vyapar-iota.vercel.app/" },
+    { name: "E-Commerce", link: "https://ecomerce-eight-nu.vercel.app/" },
+    { name: "Portfolio V1", link: "https://shivammsoni.vercel.app/" },
+    { name: "New-Beige Project", link: "https://neww-beige-nine.vercel.app/" },
+    { name: "PowerBI Dashboard", link: "https://powerbi-seven.vercel.app/" },
+    { name: "Decision Tree", link: "https://decsiontree.vercel.app/" },
+    { name: "Indie Coders", link: "https://indiecoders.online/" },
+  ];
+
   return (
     <main className="min-h-screen w-full bg-[#f8fafc] relative overflow-hidden flex items-center justify-center px-6 py-16">
       
@@ -35,139 +48,99 @@ export default function HomePage() {
         }}
       />
 
-      <div className="relative z-10 max-w-6xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+      <div className="relative z-10 max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         
-        {/* LEFT */}
+        {/* LEFT CONTENT */}
         <div className="text-center md:text-left">
-
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-100 text-teal-600 text-xs font-bold mb-6 tracking-wide uppercase"
           >
             <Sparkles size={14} className="animate-pulse" />
-            New Project: LuminaAI
+            Explore My Work
           </motion.div>
 
-          {/* Heading */}
           <motion.h1
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-3xl sm:text-4xl md:text-6xl font-bold text-gray-700 leading-tight"
+            className="text-4xl md:text-6xl font-bold text-gray-700 leading-tight"
           >
             Hi, I'm <span className="text-teal-500">Shivam Soni</span>
           </motion.h1>
 
-          {/* Typewriter */}
-          <motion.h2
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="text-2xl sm:text-3xl md:text-5xl font-semibold text-gray-800 mt-4 h-[1.2em]"
-          >
+          <motion.h2 className="text-2xl md:text-4xl font-semibold text-gray-800 mt-4 h-[1.2em]">
             <Typewriter
-              words={[
-                "AI & ML Learner",
-                "Data Analyst",
-                "Designer",
-                "Builder",
-              ]}
-              loop
-              cursor
-              cursorStyle="|"
-              typeSpeed={70}
-              deleteSpeed={40}
-              delaySpeed={1500}
+              words={["AI & ML Learner", "Data Analyst", "Designer", "Builder"]}
+              loop cursor cursorStyle="|"
+              typeSpeed={70} deleteSpeed={40} delaySpeed={1500}
             />
           </motion.h2>
 
-          {/* Description */}
-          <motion.p
+          {/* PROJECTS LIST SECTION */}
+          <div className="mt-10">
+            <h3 className="text-gray-400 font-bold text-sm uppercase tracking-widest mb-4 flex items-center gap-2">
+              <Code2 size={16} /> Featured Projects
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {projects.map((proj, idx) => (
+                <motion.a
+                  key={idx}
+                  href={proj.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="group flex items-center justify-between px-4 py-3 bg-white border border-slate-200 rounded-xl hover:border-teal-500 hover:shadow-md transition-all duration-300"
+                >
+                  <span className="text-gray-700 font-medium group-hover:text-teal-600">
+                    {proj.name}
+                  </span>
+                  <ExternalLink size={14} className="text-gray-400 group-hover:text-teal-500 group-hover:-translate-y-0.5 transition-transform" />
+                </motion.a>
+              ))}
+            </div>
+          </div>
+
+          {/* Social Icons */}
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-            className="text-gray-500 mt-6 max-w-md mx-auto md:mx-0 text-lg"
-          >
-            I build clean digital products combining data, design,
-            and real-world problem solving.
-          </motion.p>
-
-          {/* PROJECT BUTTONS */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
-            className="mt-8 flex flex-wrap justify-center md:justify-start gap-4"
-          >
-            {/* LuminaAI */}
-            <a
-              href="https://luminaai-alpha.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-xl font-semibold hover:bg-teal-600 transition-all duration-300 shadow-md hover:-translate-y-1"
-            >
-              LuminaAI
-              <ExternalLink size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-            </a>
-
-            {/* Ecommerce Project */}
-            <a
-              href="https://ecomerce-eight-nu.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-900 hover:text-white transition-all duration-300 shadow-sm hover:-translate-y-1"
-            >
-              E-Commerce App
-              <ExternalLink size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-            </a>
-          </motion.div>
-
-          {/* Icons */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2 }}
+            transition={{ delay: 1 }}
             className="flex flex-wrap justify-center md:justify-start gap-4 mt-10"
           >
             {[
-              { icon: Linkedin, link: "#", label: "LinkedIn" },
-              { icon: Github, link: "#", label: "GitHub" },
-              { icon: Mail, link: "#", label: "Mail" },
-              { icon: Brain, link: "#", label: "AI/ML" },
-              { icon: BarChart3, link: "#", label: "Data" },
-              { icon: Palette, link: "#", label: "Design" },
-              { icon: Share2, link: "#", label: "Social" },
+              { icon: Linkedin, label: "LinkedIn" },
+              { icon: Github, label: "GitHub" },
+              { icon: Mail, label: "Mail" },
+              { icon: Brain, label: "AI/ML" },
+              { icon: BarChart3, label: "Data" },
+              { icon: Palette, label: "Design" },
+              { icon: Share2, label: "Social" },
             ].map((item, index) => {
               const Icon = item.icon;
-
               return (
                 <a
                   key={index}
-                  href={item.link}
-                  title={item.label}
-                  className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center rounded-xl bg-white/80 backdrop-blur-sm border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-teal-200 transition-all duration-300"
+                  href="#"
+                  className="w-10 h-10 flex items-center justify-center rounded-lg bg-white border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300"
                 >
-                  <Icon
-                    className="text-gray-600 hover:text-teal-500 transition-colors"
-                    size={20}
-                  />
+                  <Icon className="text-gray-600 hover:text-teal-500" size={18} />
                 </a>
               );
             })}
           </motion.div>
         </div>
 
-        {/* RIGHT */}
+        {/* RIGHT CONTENT - Carousel */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5 }}
-          className="w-full flex justify-center"
+          className="w-full flex justify-center lg:justify-end"
         >
-          <div className="w-[280px] sm:w-[340px] md:w-[400px] lg:w-[450px]">
+          <div className="w-[300px] sm:w-[400px] lg:w-[450px]">
             <ThreeDCarousel />
           </div>
         </motion.div>
